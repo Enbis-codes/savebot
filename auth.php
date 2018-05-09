@@ -205,7 +205,7 @@ if($channel){
 }
 ?>
 		</p><hr>
-		<p class="small">If something doesn't work, PM me at twitch (Enbis) or discord (Enbis#3840). <a href="source/SaveSongBot.zip">Source code is here</a>, you can upload it to your own host if you have one. It's only better for me since my hosting provider is cheap and slow - not sure it'll handle it if more than a few people would use this.</p>
+		<p class="small">If something doesn't work, PM me at twitch (Enbis) or discord (Enbis#3840). <a href="https://github.com/Enbis-codes/savebot">Source code is here</a>, you can upload it to your own host if you have one. It's only better for me since my hosting provider is cheap and slow - not sure it'll handle it if more than a few people would use this.</p>
       </div>
     </div>
     <!-- Bootstrap core JavaScript -->
