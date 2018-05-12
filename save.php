@@ -7,7 +7,7 @@ if($_GET['u']) $username = preg_replace('/[^\w]/', '', $_GET['u']);
 if($_GET['username']) $username = preg_replace('/[^\w]/', '', $_GET['username']);
 if($_GET['c']) $channel = preg_replace('/[^\w]/', '', $_GET['c']);
 if($_GET['channel']) $channel = preg_replace('/[^\w]/', '', $_GET['channel']);
-if($_GET['q']) $q = preg_replace('/[^\w]/', '', $_GET['q']);
+if($_GET['q']) $q = str_replace("'", "", $_GET['q']);
 
 $result = mysqli_query($conn, "SELECT * FROM `auth_bot` WHERE `channel`='$channel' LIMIT 1");
 $row = mysqli_fetch_assoc($result);
@@ -16,7 +16,7 @@ $access = $row['access_token'];
 //Input
 switch($q){
 	case 'help':
-		echo "If you like current song, you can use !save command to add it to your own list so you can find it later! You can also add comment to the song you're saving - just type it after after !save. Type !save mylist to find your list.";
+		echo "If you like the current song, use the command [!save] (without brackets) to add it to a list of your own where you can find it later using [!save mylist]. You can also add comments to these as you save them (example: !save this is a good jam). Use [!save commands] to see what else you can do.";
 	break;
 	
 	case 'mylist':
@@ -36,7 +36,7 @@ switch($q){
 	break;
 	
 	case 'commands':
-		echo "For now special commands are: !save help, !save mylist, !save get (explains how to get !save). Edit and unsave are to be implemented.";
+		echo "For now special commands are: !save help, !save mylist, !save get - explains how to get !save, !save unsave - to remove the last song you saved.";
 	break;
 	
 	default:
@@ -93,12 +93,12 @@ if($do) {
 		$check = mysqli_query($conn, "SELECT * FROM `saved_songs` WHERE `username`='$username' AND `url`='$song_url' LIMIT 1");
 		$chrow = mysqli_fetch_assoc($check);
 		
-		if($chrow['id']) echo "@$username, you already had this song in your list! Type !mylist to see it."; // If song was saved before, it won't double
+		if($chrow['id']) echo "@$username, you already had this song in your list! Type !save mylist to see it."; // If song was saved before, it won't double
 
 		else {
 			// Saves the song!
 			$write = mysqli_query($conn, "INSERT INTO `saved_songs`(`username`, `url`, `songname`, `artist`, `comment`, `requested`, `channel`, `date`) VALUES ('$username', '$song_url', '$songname', '$artist', '$comment', '$requested', '$channel', $now)");
-			if($write) echo "@$username, song's saved to your list! Type !mylist to see it.";
+			if($write) echo "@$username, song's saved to your list! Type !song mylist to see it.";
 			else "@$username, sorry, something went wrong WutFace"; // I dunno what else can go wrong, but let's say it might.
 		}
 	}
